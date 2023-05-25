@@ -22,7 +22,7 @@ function TodoApp() {
   const handleCheck = (id) => {
     setToDos(
       toDos.map((todo) => {
-        if (todo.id === id) {
+        if (todo?.id === id) {
           todo.status = !todo.status;
         }
         return todo;
@@ -31,10 +31,18 @@ function TodoApp() {
   };
 
   const handleAddTodo = () => {
-    setToDos([...toDos, { id: Date.now(), text: toDo, status: false }]);
-    setToDo("");
+    if (toDo.trim() !== "") {
+      console.log(toDos);
+      const isDuplicate = toDos.some((todo) => todo.text === toDo.trim());
+      if (!isDuplicate) {
+        setToDos([...toDos, { id: Date.now(), text: toDo.trim(), status: false }]);
+        setToDo("");
+      } else {
+        alert("Todo already exists!");
+      }
+    }
   };
-
+  
   return (
     <div className="app">
       <div className="mainHeading">
